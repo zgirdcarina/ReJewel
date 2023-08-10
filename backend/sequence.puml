@@ -1,0 +1,19 @@
+@startuml S 
+actor User
+User -> PlaceOrderScreen: Open place order screen
+PlaceOrderScreen -> User: Render place order screen
+User -> PlaceOrderScreen: Clicks "Place Order" button
+PlaceOrderScreen -> OrderActions: Dispatch createOrder action
+OrderActions -> OrderReducers: Handle ORDER_CREATE_REQUEST
+OrderReducers -> Axios: Send POST request to /api/orders
+Axios -> Backend: Create new order
+Backend -> OrderModel: Create new order in the database
+OrderModel -> Backend: Return created order
+Backend --> Axios: Return created order
+Axios --> OrderReducers: Receive created order
+OrderReducers -> OrderReducers: Handle ORDER_CREATE_SUCCESS
+OrderReducers -> PlaceOrderScreen: Receive success response
+PlaceOrderScreen -> User: Redirect to order screen
+User -> OrderScreen: Open order screen
+OrderScreen -> User: Render order screen
+@enduml

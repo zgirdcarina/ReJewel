@@ -1,0 +1,12 @@
+*.exe
+*.out
+
+node_modules/
+
+.vscode/
+
+.babelrc
+
+package.json
+
+package-lock.json

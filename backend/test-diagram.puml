@@ -1,0 +1,136 @@
+@startuml Class
+
+class Product {
+  - _id: ObjectId
+  - jewleryClass: String
+  - name: String
+  - image: String
+  - designer: String
+  - category: String
+  - description: String
+  - price: Number
+  - countInStock: Number
+  - rating: Number
+  - numReviews: Number
+  - reviews: List<Review>
+  + createReview()
+}
+
+class Review {
+  - name: String
+  - rating: Number
+  - comment: String
+}
+
+class Order {
+  - _id: ObjectId
+  - orderItems: List<OrderItem>
+  - shippingAddress: Address
+  - paymentMethod: String
+  - paymentResult: PaymentResult
+  - itemsPrice: Number
+  - shippingPrice: Number
+  - taxPrice: Number
+  - totalPrice: Number
+  - user: ObjectId
+  - isPaid: Boolean
+  - paidAt: Date
+  - isDelivered: Boolean
+  - deliveredAt: Date
+  + createOrder()
+  + updateOrder()
+  + deleteOrder()
+}
+
+class User {
+  - _id: ObjectId
+  - name: String
+  - email: String
+  - password: String
+  - isAdmin: Boolean
+  + createUser()
+  + updateUser()
+  + deleteUser()
+}
+
+class OrderItem {
+  - name: String
+  - quantity: Number
+  - image: String
+  - price: Number
+  - product: ObjectId
+}
+
+class Address {
+  - address: String
+  - city: String
+  - postalCode: String
+  - country: String
+}
+
+class PaymentResult {
+  - id: String
+  - status: String
+  - update_time: String
+  - email_address: String
+}
+
+class ProductRoute {
+  + getProducts()
+  + getProductById()
+  + createProduct()
+  + updateProduct()
+  + deleteProduct()
+  + createReview()
+}
+
+class OrderRoute {
+  + getOrders()
+  + getOrderById()
+  + createOrder()
+  + updateOrder()
+  + deleteOrder()
+}
+
+class UploadRoute {
+  + uploadFile()
+}
+
+class UserRoute {
+  + getUsers()
+  + getUserById()
+  + createUser()
+  + updateUser()
+  + deleteUser()
+}
+
+class Server {
+  + startServer()
+}
+
+class Config {
+  - PORT: String
+  - MONGODB_URL: String
+  - JWT_SECRET: String
+  - PAYPAL_CLIENT_ID: String
+  - accessKeyId: String
+  - secretAccessKey: String
+  + setDatabaseConfig()
+  + getDatabaseConfig()
+}
+
+ProductRoute --|> Product
+OrderRoute --|> Order
+UserRoute --|> User
+Server --|> ProductRoute
+Server --|> OrderRoute
+Server --|> UploadRoute
+Server --|> UserRoute
+Server --|> Config
+
+Order "1" *-- "*" OrderItem : contains
+Order "1" -- "1" User : placed by
+
+Product "*" -- "*" Review : has
+
+@enduml

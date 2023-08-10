@@ -1,0 +1,70 @@
+@startuml db
+
+package "ReJewel Database" {
+
+  class "Product" {
+    +_id: ObjectId
+    +jewelryClass: String
+    +name: String
+    +image: String
+    +designer: String
+    +category: String
+    +description: String
+    +price: Number
+    +countInStock: Number
+    +rating: Number
+    +numReviews: Number
+    +createdAt: Date
+    +updatedAt: Date
+  }
+
+  class "User" {
+    +_id: ObjectId
+    +name: String
+    +email: String
+    +password: String
+    +isAdmin: Boolean
+    +createdAt: Date
+    +updatedAt: Date
+  }
+
+  class "Order" {
+    +_id: ObjectId
+    +orderItems: Array
+    +shippingAddress: Address
+    +paymentMethod: String
+    +paymentResult: PaymentResult
+    +itemsPrice: Number
+    +shippingPrice: Number
+    +taxPrice: Number
+    +totalPrice: Number
+    +user: ObjectId
+    +isPaid: Boolean
+    +paidAt: Date
+    +isDelivered: Boolean
+    +deliveredAt: Date
+    +createdAt: Date
+    +updatedAt: Date
+  }
+
+  class Address {
+    +address: String
+    +city: String
+    +postalCode: String
+    +country: String
+  }
+
+  class PaymentResult {
+    +id: String
+    +status: String
+    +update_time: String
+    +email_address: String
+  }
+
+  "Product" -- "User" : <<Reference>>
+  "Product" -- "Order" : <<Reference>>
+  "User" -- "Order" : <<Reference>>
+
+}
+
+@enduml

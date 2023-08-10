@@ -1,0 +1,30 @@
+@startuml Use
+
+actor User
+participant "Login Screen" as LoginScreen
+participant "Product Creation Screen" as ProductCreationScreen
+participant "Order Placement Screen" as OrderPlacementScreen
+participant "Payment Screen" as PaymentScreen
+participant "User API" as UserAPI
+participant "Product API" as ProductAPI
+participant "Order API" as OrderAPI
+participant "Payment API" as PaymentAPI
+database Database
+
+User -> LoginScreen: Enter login credentials
+LoginScreen -> UserAPI: Authenticate user
+UserAPI -> Database: Verify user credentials
+
+User -> ProductCreationScreen: Create a product
+ProductCreationScreen -> ProductAPI: Send product details
+ProductAPI -> Database: Store product details
+
+User -> OrderPlacementScreen: Place an order
+OrderPlacementScreen -> OrderAPI: Send order details
+OrderAPI -> Database: Store order details
+
+User -> PaymentScreen: Proceed to payment
+PaymentScreen -> PaymentAPI: Initiate payment process
+PaymentAPI -> Database: Verify payment details
+
+@enduml
